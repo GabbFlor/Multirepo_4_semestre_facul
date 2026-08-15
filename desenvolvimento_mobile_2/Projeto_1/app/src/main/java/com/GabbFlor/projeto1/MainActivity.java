@@ -1,9 +1,7 @@
 package com.GabbFlor.projeto1;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,12 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         btn_fds.setOnClickListener(v -> {
             Toast.makeText(this, "Supresa...", Toast.LENGTH_SHORT).show();
-
-            // cria a intenção, tipo de onde quer sair para onde quer ir
-            Intent intent = new Intent(MainActivity.this, Sorteio_top.class);
-
-            // executa a intenção que foi criada
-            startActivity(intent);
         });
     }
 }

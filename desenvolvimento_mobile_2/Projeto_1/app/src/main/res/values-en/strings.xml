@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Project1</string>
+    <string name="exemplo_funcionalidade">Nice Functions</string>
+    <string name="btn_ola">Hello android</string>
+    <string name="btn_ciclo">Cicle screen</string>
+    <string name="btn_count">Count screen</string>
+</resources>

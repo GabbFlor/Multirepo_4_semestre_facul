@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Projeto1</string>
+    <string name="exemplo_funcionalidade">Funcionalidades tops</string>
+    <string name="btn_ola">Olá android</string>
+    <string name="btn_ciclo">Tela ciclo</string>
+    <string name="btn_count">Tela contador</string>
 </resources>

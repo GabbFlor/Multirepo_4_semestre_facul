@@ -13,6 +13,10 @@
         android:theme="@style/Theme.Projeto1">
         <activity
             android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Principal"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -23,6 +27,10 @@
         </activity>
         <activity
             android:name=".Sorteio_top"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Ciclo"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
