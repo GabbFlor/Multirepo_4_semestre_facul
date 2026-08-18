@@ -14,15 +14,34 @@ st.set_page_config(
 
 st.title("💻 TechStore - Assistente Virtual")
 
-id_modelo = "llama-3.3-70b-versatile"
+id_modelo = "openai/gpt-oss-20b"
 
 
 def load_llm():
     return ChatGroq(
         model=id_modelo,
-        temperature=0.3,
-        max_retries=2
+        temperature=1,
+        max_retries=2,
+        max_tokens=None,
+        timeout=None
     )
 
 
 llm = load_llm()
+
+def responder_usuario(pergunta):
+    template = ChatPromptTemplate.from_messages([
+        ("system", "Vocé um assistente especialsta em programação"),
+        ("human", "{pergunta}")
+    ])
+    chain = template | llm
+
+    resposta = chain.invoke({
+        "pergunta": pergunta
+    })
+
+    return resposta
+
+user = "Explique 'public static void main()' do java"
+resp = responder_usuario(pergunta=user)
+print(resp)
