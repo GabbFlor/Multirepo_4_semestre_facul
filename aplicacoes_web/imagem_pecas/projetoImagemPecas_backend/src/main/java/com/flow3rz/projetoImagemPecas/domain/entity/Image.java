@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class image {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
