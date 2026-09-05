@@ -40,14 +40,16 @@
                 correto: quem não pode ser match_parent é a raiz do LAYOUT DO
                 ITEM, que é outro arquivo.
             -->
+
+            <!-- Estado vazio: faz parte da interface, não é acidente. -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvLugares"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="88dp" />
+                android:paddingBottom="88dp"
+                tools:listitem="@layout/item_lugar" />
 
-            <!-- Estado vazio: faz parte da interface, não é acidente. -->
             <LinearLayout
                 android:id="@+id/grupoVazio"
                 android:layout_width="match_parent"
