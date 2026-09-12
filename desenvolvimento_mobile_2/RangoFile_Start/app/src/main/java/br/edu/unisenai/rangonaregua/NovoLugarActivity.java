@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.edu.unisenai.rangonaregua.data.LugarRepository;
 import br.edu.unisenai.rangonaregua.model.Lugar;
 
 
@@ -64,7 +66,14 @@ public class NovoLugarActivity extends AppCompatActivity {
                 );
 
                 // inputando o novo objeto na lista de lugares q ta na main
-                listaLugar.add(newLugar);
+                LugarRepository repository = new LugarRepository();
+                repository.inserir(newLugar)
+                        .addOnSuccessListener(command -> {
+                            Toast.makeText(this, "Sucesso", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(command -> {
+                            Toast.makeText(this, "Deu merda", Toast.LENGTH_SHORT).show();
+                        });
                 finish();
             }
         });
