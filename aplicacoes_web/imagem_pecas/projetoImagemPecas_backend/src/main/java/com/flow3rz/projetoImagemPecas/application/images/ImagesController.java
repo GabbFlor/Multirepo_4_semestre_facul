@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,9 +60,10 @@ public class ImagesController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(image.getExtension().getMediaType());
         headers.setContentLength(image.getSize());
-        headers.setContentDispositionFormData("", image.getName().concat("").concat(image.getExtension().name()));
+        //headers.setContentDispositionFormData("", image.getFileName());
+        headers.setContentDispositionFormData("inline: filename \"" + image.getName() + "\"", image.getFileName());
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
     }
 
     private URI buildImagesURL(Image image) {
