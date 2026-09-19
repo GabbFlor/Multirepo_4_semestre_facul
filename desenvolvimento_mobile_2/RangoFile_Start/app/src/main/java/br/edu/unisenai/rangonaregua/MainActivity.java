@@ -4,6 +4,8 @@ package br.edu.unisenai.rangonaregua;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
@@ -49,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements LugarAdapter.Acao
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // carregar o database (mock com dados ficticios)
         // listaLugar = Catalogo.inicial();
@@ -140,5 +146,25 @@ public class MainActivity extends AppCompatActivity implements LugarAdapter.Acao
         // manda o obj em questão (o que foi clicado) para a nova activity
         rota.putExtra("obj",lugar);
         startActivity(rota);
+    }
+
+    // liga a toolbar q tem a função de logout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.menuSair) {
+            FirebaseAuth autenticar = FirebaseAuth.getInstance();
+            autenticar.signOut();
+
+            Intent rota = new Intent(this, LoginActivity.class);
+            startActivity(rota);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
