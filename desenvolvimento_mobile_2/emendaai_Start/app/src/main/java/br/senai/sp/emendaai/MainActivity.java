@@ -1,5 +1,6 @@
 package br.senai.sp.emendaai;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FeriadoAdapter.Acao {
 
     private static final String CHAVE_ANO = "ano_selecionado";
     private static final String CHAVE_FERIADOS = "feriados_carregados";
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        adapter = new FeriadoAdapter(listaFeriado);
+        adapter = new FeriadoAdapter(listaFeriado, this);
         lista.setLayoutManager(new LinearLayoutManager(this));
         lista.setAdapter(adapter);
     }
@@ -130,4 +131,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void detalhes(Feriado feriado) {
+        Intent intent = new Intent(this, DetalheFeriadoActivity.class);
+        intent.putExtra("feriado", feriado);
+        startActivity(intent);
+    }
 }

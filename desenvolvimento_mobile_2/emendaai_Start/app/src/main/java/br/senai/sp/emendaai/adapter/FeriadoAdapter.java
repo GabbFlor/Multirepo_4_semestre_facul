@@ -17,8 +17,14 @@ import br.senai.sp.emendaai.util.Datas;
 public class FeriadoAdapter extends RecyclerView.Adapter<FeriadoAdapter.FeriadoViewHolder> {
     private List<Feriado> listaFeriados;
 
-    public FeriadoAdapter(List<Feriado> listaFeriados) {
+    public interface Acao {
+        void detalhes(Feriado feriado);
+    }
+
+    private Acao acao;
+    public FeriadoAdapter(List<Feriado> listaFeriados, Acao acao) {
         this.listaFeriados = listaFeriados;
+        this.acao = acao;
     }
 
     @NonNull
@@ -46,6 +52,8 @@ public class FeriadoAdapter extends RecyclerView.Adapter<FeriadoAdapter.FeriadoV
         } else {
             holder.txtSelo.setVisibility(View.GONE);
         }
+
+        vh.itemView.setOnClickListener(v -> acao.detalhes(feriado));
     }
 
     @Override
