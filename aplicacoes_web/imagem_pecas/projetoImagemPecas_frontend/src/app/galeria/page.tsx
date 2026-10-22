@@ -1,12 +1,9 @@
-import { PrimeiroComponent, ArrowFunction } from "@/components/PrimeiroComponent";
+import { Template } from "@/components/Template";
 
 export default function GaleriaPage() {
     return (
-        <div>
+        <Template>
             <h1>Galeria</h1>
-
-            <PrimeiroComponent mensagem="Fodase" />
-            <ArrowFunction />
-        </div>
+        </Template>
     )
 }
