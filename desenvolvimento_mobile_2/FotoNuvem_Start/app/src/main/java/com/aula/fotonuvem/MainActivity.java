@@ -127,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
         
         btnEnviar.setOnClickListener(v -> {
             enviarNuvem();
+            salvarGaleria();
+        });
+
+        txtStatus.setOnClickListener(v -> {
+            Intent intent = new Intent(this, VerImagem.class);
+            intent.putExtra("url", urlNuvem);
+            startActivity(intent);
         });
     }
 
@@ -207,6 +214,33 @@ public class MainActivity extends AppCompatActivity {
             MediaManager.init(this, config);
         } catch (Exception e) {
             Log.e("Cloudinary", "Erro na hora de iniciar o cloudnary" + e.getMessage());
+        }
+    }
+
+    private void salvarGaleria() {
+        // criando o dicionario que vai armazenar as informacoes necessarias para salvar a imagem
+        ContentValues dados = new ContentValues();
+        dados.put(MediaStore.Images.Media.DISPLAY_NAME, "fotoA_" + System.currentTimeMillis() + ".jpg");
+        dados.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        dados.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/AppAulaNisflei");
+
+        Uri imagemSava = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, dados);
+
+        try {
+            // pegamos a foto temporaria que salvamos antes
+            InputStream in = getContentResolver().openInputStream(fotoUri);
+
+            // salvamos
+            OutputStream out = getContentResolver().openOutputStream(imagemSava);
+
+            // separa o arquivo em buffers de 1024 bytes e armazena parte por parte
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                out.write(buffer, 0 , len);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
