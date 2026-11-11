@@ -1,41 +1,45 @@
 'use client';
 
 import { ImageCard, Template } from "@/components";
+import { Image } from "@/resources/image/image.resource";
+import { useImageService } from "@/resources/image/image.service";
 import { useState } from "react";
 
 export default function GaleriaPage() {
-    const image1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXAc0RxGrr5HiyjpeFOD7yWs6VhOvozLVhgw1RWU0PqthHLuNpOxgy9jeu&s=10";
-    const image2 = "https://m.media-amazon.com/images/I/71veNz-BVNL.jpg";
+    const useService = useImageService();
+    const [images, setImages] = useState<Image[]>([]);
 
-    const nome1 = "Placa de vídeo";
-    const nome2 = "SSD";
+    async function searchImages() {
+        const result = await useService.search();
+        setImages(result);
+        console.table(result);
+    }
 
-    const [codigoImagem, setCodigoImagem] = useState<number>(1);
-    const [urlImagem, setUrlImagem] = useState<string>(image1);
-    const [nomeImagem, setNomeImagem] = useState<string>(nome1);
+    function renderImageCard(image: Image) {
+        return (
+            <ImageCard key={image.url}
+                title={image.name}
+                src={image.url}
+                size={image.size}
+                dateUpload={image.uploadDate}
+            />
+        )
+    }
 
-    function mudarImagem() {
-        if (codigoImagem === 1) {
-            setCodigoImagem(2);
-            setUrlImagem(image2);
-            setNomeImagem(nome2);
-        } else {
-            setCodigoImagem(1);
-            setUrlImagem(image1);
-            setNomeImagem(nome1);
-        }
+    function renderImageCards() {
+        //return images.map(image => renderImageCard(image));
+        return images.map(renderImageCard);
     }
 
     return (
         <Template>
             <h1>Galeria</h1>
 
-            <button onClick={mudarImagem}>Clique para mudar</button>
+            <button onClick={searchImages}>Clique para mudar</button>
             <section className="grid grid-cols-4 gap-8">
-                <ImageCard src={urlImagem} title={nomeImagem} size="5mb" dateUpload="2023-01-01" />
-                <ImageCard src={urlImagem} title={nomeImagem} size="5mb" dateUpload="2023-01-02" />
-                <ImageCard src={urlImagem} title={nomeImagem} size="5mb" dateUpload="2023-01-03" />
-                <ImageCard src={urlImagem} title={nomeImagem} size="5mb" dateUpload="2023-01-04" />
+                {
+                    renderImageCards()
+                }
             </section>
         </Template>
     )

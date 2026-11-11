@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/v1/images")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ImagesController {
     private static final Logger log = LoggerFactory.getLogger(ImagesController.class);
 
@@ -36,7 +37,7 @@ public class ImagesController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("name") String name,
             @RequestParam("tags") List<String> tags
-            ) throws IOException {
+    ) throws IOException {
 
         log.info("Imagem recebida: name: {}, size: {}", file.getOriginalFilename(), file.getSize());
         log.info("Nome definido: {}", name);
