@@ -8,11 +8,13 @@ import { useState } from "react";
 export default function GaleriaPage() {
     const useService = useImageService();
     const [images, setImages] = useState<Image[]>([]);
+    const [query, setQuery] = useState<string>("");
+    const [extension, setExtension] = useState<string>("");
 
     async function searchImages() {
-        const result = await useService.search();
+        const result = await useService.search(query, extension);
         setImages(result);
-        console.table(result);
+        console.log(`Valor digitado: ${query}`)
     }
 
     function renderImageCard(image: Image) {
@@ -33,9 +35,25 @@ export default function GaleriaPage() {
 
     return (
         <Template>
-            <h1>Galeria</h1>
+            <section className="felx flex-col items-center justify-center my-3">
+                <div className="flex space-x-4">
+                    <input 
+                        type="text" 
+                        className="border px-5 py-2 rounded-lg text-gray-900"
+                        onChange={e => setQuery(e.target.value)}
+                    />
+                    <select className="border px-4 py-2 rounded-lg text-gray-900"onChange={e => setExtension(e.target.value)}>
+                        <option value="">All formats</option>
+                        <option value="PNG">PNG</option>
+                        <option value="JPEG">JPEG</option>
+                        <option value="GIF">GIF</option>
+                    </select>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={searchImages}>Search</button>
+                    <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg">Add New</button>
+                </div>
+            </section>
 
-            <button onClick={searchImages}>Clique para mudar</button>
+            
             <section className="grid grid-cols-4 gap-8">
                 {
                     renderImageCards()

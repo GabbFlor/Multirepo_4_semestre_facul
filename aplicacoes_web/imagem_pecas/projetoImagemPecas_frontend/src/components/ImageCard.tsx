@@ -6,9 +6,15 @@ interface ImageCardProps {
 }
 
 export const ImageCard = ({ src, title, size, dateUpload }: ImageCardProps) => {
+  
+  function download() {
+    window.open(src, "_blank")
+  }
+  
   return (
     <div className="card relative bg-white shadow-md rounded-lg transition-transform ease-in duration-300 transform hover:shadow-lg hover:translate-y-2">
       <img 
+        onClick={download}
         src={src} 
         alt={title} 
         className="h-56 w-full object-cover rounded-t-md" 

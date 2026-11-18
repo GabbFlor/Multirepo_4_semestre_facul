@@ -46,6 +46,6 @@ public class Image {
     private byte[] file;
 
     public String getFileName() {
-        return getName().concat("").concat(getExtension().name());
+        return getName().concat(".").concat(getExtension().name());
     }
 }
