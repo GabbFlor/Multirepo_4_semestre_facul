@@ -3,6 +3,7 @@
 import { ImageCard, Template } from "@/components";
 import { Image } from "@/resources/image/image.resource";
 import { useImageService } from "@/resources/image/image.service";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function GaleriaPage() {
@@ -10,11 +11,14 @@ export default function GaleriaPage() {
     const [images, setImages] = useState<Image[]>([]);
     const [query, setQuery] = useState<string>("");
     const [extension, setExtension] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     async function searchImages() {
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         const result = await useService.search(query, extension);
         setImages(result);
-        console.log(`Valor digitado: ${query}`)
+        setLoading(false);
     }
 
     function renderImageCard(image: Image) {
@@ -23,6 +27,7 @@ export default function GaleriaPage() {
                 title={image.name}
                 src={image.url}
                 size={image.size}
+                extension={image.extension}
                 dateUpload={image.uploadDate}
             />
         )
@@ -34,7 +39,7 @@ export default function GaleriaPage() {
     }
 
     return (
-        <Template>
+        <Template loading={loading}>
             <section className="felx flex-col items-center justify-center my-3">
                 <div className="flex space-x-4">
                     <input 
@@ -48,8 +53,10 @@ export default function GaleriaPage() {
                         <option value="JPEG">JPEG</option>
                         <option value="GIF">GIF</option>
                     </select>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={searchImages}>Search</button>
-                    <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg">Add New</button>
+                    <button className="bg-red-500 hover:bg-red-300 text-white px-4 py-2 rounded-lg" onClick={searchImages}>Search</button>
+                    <Link href="/formulario">
+                        <button className="bg-yellow-500 hover:bg-yellow-300 text-white px-4 py-2 rounded-lg">Add New</button>
+                    </Link>
                 </div>
             </section>
 

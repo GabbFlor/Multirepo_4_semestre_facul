@@ -74,6 +74,8 @@ public class ImagesController {
             @RequestParam(value = "query", required = false) String query) {
         // aplica nova função do enum para evitar a obrigatoriedade do "extension" nos params
         var result = service.search(ImageExtension.ofName(extension), query);
+        System.out.println(result.getFirst().getSize());
+        System.out.println(result.getFirst().getId());
         var images = result.stream().map(image -> {
             var url = buildImagesURL(image);
             return mapper.imageToDTO(image, url.toString());
